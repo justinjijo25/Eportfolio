@@ -27,8 +27,9 @@ button, .nav-link { cursor: pointer; }
 nav { position: fixed; inset: 0 0 auto 0; z-index: 20; height: 68px; backdrop-filter: blur(16px); background: rgba(9,11,18,0.95); border-bottom: 1px solid rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: space-between; padding: 0 24px; }
 nav .brand { font-family: 'Syne', sans-serif; font-size: 1.4rem; letter-spacing: 0.12em; text-transform: uppercase; color: #fff; font-weight: 800; }
 nav .menu { display: flex; gap: 14px; flex-wrap: wrap; }
-.nav-link { color: #d7deed; text-decoration: none; font-size: 1.05rem; padding: 10px 12px; border-radius: 12px; transition: background 0.2s, color 0.2s; font-weight: 500; }
+.nav-link { color: #d7deed; text-decoration: none; font-size: 1.05rem; padding: 10px 12px; border-radius: 12px; transition: background 0.2s, color 0.2s; font-weight: 500; background: transparent; border: 0; font-family: inherit; }
 .nav-link.active, .nav-link:hover { background: rgba(255,255,255,0.08); color: #fff; }
+.nav-link:focus-visible, .card:focus-visible, .back-btn:focus-visible, .tab-bar .tab:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 main { position: relative; min-height: 100vh; padding-top: 82px; overflow: hidden; }
 #bg-canvas { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; opacity: 1; transition: opacity 0.35s ease; }
 .content { position: relative; z-index: 2; min-height: calc(100vh - 82px); padding: 24px 24px 48px; background: rgba(6, 10, 18, 0.2); backdrop-filter: blur(8px); border-radius: 34px; border: 1px solid rgba(255,255,255,0.06); transition: background 0.4s ease; }
@@ -40,7 +41,7 @@ main { position: relative; min-height: 100vh; padding-top: 82px; overflow: hidde
 .page-header h2 { font-size: 2.5rem; color: var(--accent); margin-top: 10px; font-weight: 700; }
 .page-header p { max-width: 740px; line-height: 1.8; margin: 18px 0 0; color: #c7d0e7; font-size: 1.15rem; }
 .card-grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); }
-.card { background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(6,8,16,0.25)); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.07); border-radius: 24px; padding: 22px; min-height: 180px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 18px 70px rgba(2,4,12,0.2); transition: transform 0.22s ease, border-color 0.2s ease; }
+.card { background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(6,8,16,0.25)); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.07); border-radius: 24px; padding: 22px; min-height: 180px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 18px 70px rgba(2,4,12,0.2); transition: transform 0.22s ease, border-color 0.2s ease; width: 100%; text-align: left; color: inherit; font: inherit; appearance: none; }
 .card:hover { transform: translateY(-4px); border-color: rgba(126,249,192,0.32); }
 .card-title { font-family: 'Syne', sans-serif; font-size: 1.4rem; margin: 0; display: flex; align-items: center; gap: 10px; font-weight: 700; word-break: break-word; }
 .card-title span { font-size: 1.6rem; flex-shrink: 0; }
@@ -87,12 +88,13 @@ main { position: relative; min-height: 100vh; padding-top: 82px; overflow: hidde
 <nav>
   <div class="brand">Justin Jijo</div>
   <div class="menu">
-    <a class="nav-link active" data-page="home" onclick="showPage('home')">Home</a>
-    <a class="nav-link" data-page="core" onclick="showPage('core')">Core Subjects</a>
-    <a class="nav-link" data-page="rot" onclick="showPage('rot')">Rotational</a>
-    <a class="nav-link" data-page="work" onclick="showPage('work')">Work Experience</a>
-    <a class="nav-link" data-page="mod" onclick="showPage('mod')">Modules</a>
-    <a class="nav-link" data-page="more" onclick="showPage('more')">More</a>
+    <button type="button" class="nav-link active" data-page="home" onclick="showPage('home')">Home</button>
+    <button type="button" class="nav-link" data-page="core" onclick="showPage('core')">Core Subjects</button>
+    <button type="button" class="nav-link" data-page="rot" onclick="showPage('rot')">Rotational Subjects</button>
+    <button type="button" class="nav-link" data-page="work" onclick="showPage('work')">Work Experience</button>
+    <button type="button" class="nav-link" data-page="mod" onclick="showPage('mod')">Modules</button>
+    <button type="button" class="nav-link" data-page="masked" onclick="showSection('masked')">Masked Singers</button>
+    <button type="button" class="nav-link" data-page="more" onclick="showPage('more')">More</button>
   </div>
 </nav>
 <main>
@@ -156,7 +158,7 @@ main { position: relative; min-height: 100vh; padding-top: 82px; overflow: hidde
         <div class="work-card"><h3>💊 Molloys Pharmacy</h3><p>Location: Garden Street, Ballina · First Placement</p><p>Worked primarily in stock management — organising, checking, and managing inventory to keep the pharmacy well-stocked and efficient. Also produced price tag stickers and carried out regular stock checks.</p><p>Learned responsibility, organisation, and what it means to work in a professional retail environment.</p><div class="chip-row"><span class="chip">Stock Management</span><span class="chip">Organisation</span><span class="chip">Retail</span></div></div>
         <div class="work-card"><h3>☕ Jimmy's Coffee Shop</h3><p>Second Placement</p><p>Worked as a Traffic Manager — helping manage the flow of customers during busy periods. Also handed out coffees, stocked shelves with products, and kept the area clean and tidy.</p><p>Learned how important it is to stay calm and organised when things get busy, and how every role keeps a business running smoothly.</p><div class="chip-row"><span class="chip">Customer Service</span><span class="chip">Time Management</span><span class="chip">Decision-Making</span></div></div>
         <div class="work-card"><h3>🏥 Sonas Nursing Home</h3><p>Third Placement</p><p>Observed staff working with residents who have various conditions including dementia — watching daily routines, communication methods, and person-centred care tailored to each individual.</p><p>Saw how patience, empathy, and good communication make a real difference in nursing home work.</p><div class="chip-row"><span class="chip">Healthcare</span><span class="chip">Empathy</span><span class="chip">Observation</span></div></div>
-      </div>
+      </div><button onclick="showPage('mod'); openCard('mod', 0); window.scrollTo(0, 0);" style="display: block; width: fit-content; margin: 40px auto; padding: 15px 30px; background: var(--accent); color: #000; font-weight: bold; border-radius: 50px; cursor: pointer; border: none;">Next: Modules →</button>
     </section>
     <section id="mod-page" class="page">
       <div class="page-header"><h2>Modules</h2><p>Special modules are shown here with their focus, learning and applied skills.</p></div>
@@ -165,6 +167,51 @@ main { position: relative; min-height: 100vh; padding-top: 82px; overflow: hidde
         <button class="back-btn" onclick="closeCard('mod')">← Back</button>
         <div id="mod-tabbar" class="tab-bar"></div>
         <div id="mod-detail-content" class="detail-content"></div>
+      </div>
+    </section>
+    <section id="masked-page" class="page">
+      <div class="page-header"><h2>The Masked Singers</h2><p>A fun mix of stage performance, creativity, and digital voting technology.</p></div>
+      <div class="detail-panel">
+        <div class="detail-content">
+          <div style="display:grid;grid-template-columns:1.1fr 0.9fr;gap:18px;align-items:start;">
+            <div>
+              <h3>The Masked Singers</h3>
+              <h4>What I Did</h4>
+              <p>I performed in <em>The Masked Singers</em>, a fun musical show featuring 9 masked singers who danced to different songs while portraying famous celebrities hidden in inflatable costumes. I created a survey website for the audience to vote and guess our identities based on performance hints.</p>
+              <h4>My Role</h4>
+              <p style="margin-top:0;">I played Tom Cruise wearing a shark inflatable costume, dancing to "Don't Stop Me Now" by Queen. After all performances, we had an exciting unmasking ceremony where we revealed our true celebrity identities.</p>
+              <h4>What I Learned</h4>
+              <p style="margin-top:0;">This experience taught me how to combine dance choreography, costume performance, and tech skills (building the voting website). I learned the challenge of performing energetically while staying in character through bulky inflatables and engaging an audience with clever hints.</p>
+            </div>
+            <div>
+              <div class="masked-carousel" data-index="0" style="display:grid;gap:10px;">
+                <div class="masked-carousel-track" style="position:relative;height:320px;overflow:hidden;border-radius:16px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.03);">
+                  <div class="masked-slide" style="position:absolute;inset:0;opacity:1;transition:opacity .3s ease;"><img src="file:///C:/Users/herob/.cursor/projects/c-Website/assets/c__Users_herob_AppData_Roaming_Cursor_User_workspaceStorage_empty-window_images_group_musical-39ac8b20-3e22-4968-918d-894ece9294bb.png" alt="Masked Singers group photo" style="width:100%;height:100%;object-fit:cover;"></div>
+                  <div class="masked-slide" style="position:absolute;inset:0;opacity:0;transition:opacity .3s ease;"><img src="file:///C:/Users/herob/.cursor/projects/c-Website/assets/c__Users_herob_AppData_Roaming_Cursor_User_workspaceStorage_empty-window_images_first_mashup-dfd5e31a-7297-4341-998c-4c36017a9bc7.png" alt="Masked Singers mashup scene 1" style="width:100%;height:100%;object-fit:cover;"></div>
+                  <div class="masked-slide" style="position:absolute;inset:0;opacity:0;transition:opacity .3s ease;"><img src="file:///C:/Users/herob/.cursor/projects/c-Website/assets/c__Users_herob_AppData_Roaming_Cursor_User_workspaceStorage_empty-window_images_first_mashup4-a5446e91-f83a-42e2-a733-7f958482a15a.png" alt="Masked Singers mashup scene 2" style="width:100%;height:100%;object-fit:cover;"></div>
+                  <div class="masked-slide" style="position:absolute;inset:0;opacity:0;transition:opacity .3s ease;"><img src="file:///C:/Users/herob/.cursor/projects/c-Website/assets/c__Users_herob_AppData_Roaming_Cursor_User_workspaceStorage_empty-window_images_shark1-9f2c90cb-85b6-4904-a8af-3debe1f2ff0b.png" alt="Shark costume performance 1" style="width:100%;height:100%;object-fit:cover;"></div>
+                  <div class="masked-slide" style="position:absolute;inset:0;opacity:0;transition:opacity .3s ease;"><img src="file:///C:/Users/herob/.cursor/projects/c-Website/assets/c__Users_herob_AppData_Roaming_Cursor_User_workspaceStorage_empty-window_images_shark2-03d988ed-ecc3-48e9-9173-c723981b946a.png" alt="Shark costume performance 2" style="width:100%;height:100%;object-fit:cover;"></div>
+                  <div class="masked-slide" style="position:absolute;inset:0;opacity:0;transition:opacity .3s ease;"><img src="file:///C:/Users/herob/.cursor/projects/c-Website/assets/c__Users_herob_AppData_Roaming_Cursor_User_workspaceStorage_empty-window_images_end-78400ce3-3764-4b12-8ae1-76543774126d.png" alt="Masked Singers finale" style="width:100%;height:100%;object-fit:cover;"></div>
+                </div>
+                <div style="display:flex;gap:8px;justify-content:center;">
+                  <button type="button" class="tab" onclick="moveMaskedSlide(this,-1)">Prev</button>
+                  <button type="button" class="tab" onclick="moveMaskedSlide(this,1)">Next</button>
+                </div>
+              </div>
+              <video controls style="width:100%;border-radius:12px;border:1px solid rgba(255,255,255,0.1);margin-top:14px;">
+                <source src="images/VID-20260423-WA0064.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+          <h4>Skills I Developed</h4>
+          <ul style="text-align:justify;">
+            <li>Web development — Built the audience voting survey site</li>
+            <li>Performance confidence — Dancing in costume to a live audience</li>
+            <li>Team coordination — Rehearsing with 9 performers and timing the show</li>
+          </ul>
+          <div class="chip-row"><span class="chip">Web Development</span><span class="chip">Performance</span><span class="chip">Teamwork</span><span class="chip">Creative Problem Solving</span></div>
+          <button onclick="showPage('more'); openCard('more', 0); window.scrollTo(0, 0);" style="display: block; width: fit-content; margin: 40px auto; padding: 15px 30px; background: var(--accent); color: #000; font-weight: bold; border-radius: 50px; cursor: pointer; border: none;">Next: More Activities →</button>
+        </div>
       </div>
     </section>
     <section id="more-page" class="page">
@@ -187,67 +234,56 @@ main { position: relative; min-height: 100vh; padding-top: 82px; overflow: hidde
   </div>
 </main>
 <script>
-const TITLES = {
-  core:['English','Maths','Religious Education','Physical Education','Computers','Career Guidance'],
-  rot:['Art','Climate Action & Sustainability','Chemistry','First Aid','Media Studies','Graphics','Business','Agricultural Science','Community Care','Technical Graphics','Home Economics','History','Biology'],
-  mod:['Swimming & Lifesaving','Golf','Gym'],
-  more:['Induction Day','Wildlands Trip','Careers Event — School','Careers Event — Claremorris','Self Defence','Social Dancing','Forensic Fun','Baby Egg Challenge','Ice Skating','YSI TRIP','Young Environmentalist Awards 2026','Dublin Explorium']
-};
-const SUBS = {
-  core:['Film history, No Trumpets Needed, short stories, and podcasting.','Integers, algebra, binary code, and trigonometry.','Justice, peace, moral decision-making, and remembrance.','Team sports and swimming at Ballina Swimming Club.','Scratch, Microbit, and hands-on coding projects.','CareersPortal.ie and career exploration.'],
-  rot:['Shading techniques and papier-mâché fish sculptures.','Air quality experiments and Mayo County Council video campaign.','Alkali metals, flame tests, chromatography, and titration.','CPR, AED training, heart attack vs cardiac arrest.','Digital editor of the TY school newsletter.','Onshape CAD — phone, holder, and Christmas models.','Household and business insurance types.','Germination experiments and plant microscopy.','Sonas carol service and environmental action.','File types and a precision keytag project.','Paella, pizza from scratch, and kitchen confidence.','The 9/11 attacks and their global impact.','Cells, genetics, and the human eye.'],
-  mod:['Ballina Swimming Club — lifesaving and water safety.','10 weeks of golf basics and course technique.','Core and strength training sessions.'],
-  more:['Martial arts, percussion, and team-building on day one.','Ziplines, wall climbing, trampolines, and disc golf in Moycullen.','Engineering, plumbing, and steel fabrication talks.','College talks and course information from many institutions.','10 weeks of practical self-defence techniques.','Waltz, line dancing, and a competition on 29th January.','JFK assassination, fingerprints, and gunpowder testing.','A week caring for Rober McCurran — our egg baby.','Sligo on Ice — 15th January.','Presenting "Suspect Before Accept" in Sligo — 12th March.','The Green Vision Project — Gortnor Abbey.','Hydrogen cars, Tesla coils, AI workshops, and agility tests.']
-};
 const SECTION_DATA = {
   core:[
     { key:'english', icon:'🎬', title:'English', preview:'Film history, No Trumpets Needed, short stories, and podcasting.', effect:'english', accent:'#5dffa0', bg:'#04120a', html:`<h3>Film Studies, Stories and Podcasting</h3><p>Our English class combined film history, descriptive writing and audio production in a creative way.</p><img src="images/hunger_games_poster.png" style="float: right; margin-left: 20px; margin-bottom: 15px; width: 180px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);"><h4>Term One — Film Studies</h4><p>Our focus was the history of films, types of camera shots, and film analysis through The Hunger Games. We studied how cinema evolved from silent recordings in the late 19th century. Key milestones included Thomas Edison and the Lumière brothers, transition to sound and colour, and the influence of new technologies.</p><h4>Camera Shots</h4><ul><li>Close-Up: captures emotion and fine detail</li><li>Medium Shot: waist-up, used for dialogue scenes</li><li>Long Shot: full subject with surroundings, often an establishing shot</li><li>Over the Shoulder: shows conversation perspective</li><li>Bird's Eye View: aerial overhead angle</li></ul><img src="images/hunger_games_review.jpg" style="float: right; margin-left: 20px; margin-bottom: 15px; width: 260px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);"><h4>The Hunger Games Film Review</h4><p>We watched the film and practised analysis — comparing it to the book, examining director choices, character motivations, and themes like identity, survival, and rebellion. I created a full film review in Canva combining visual design with written analysis, ratings, and key scene breakdowns.</p><h4>Term Two — No Trumpets Needed</h4><p>We studied short stories, focusing on <em>No Trumpets Needed</em> by Michael Morpurgo. Set on the West Bank, it follows a cameraman who meets Saeed, a shepherd boy flying a kite of peace. The story explores themes of peace, conflict, hope, and human connection.</p><p><strong>What I Learned:</strong> I learned how short stories express strong ideas through careful language and structure, and how writers use setting and character to make a story more meaningful.</p><h4>Term Three — Podcasting</h4><p>We studied podcasting — a creative topic that improved our listening, speaking, and communication skills. We learned how podcasts share ideas, tell stories, and present information in an engaging way, and how audio can be used as a modern educational tool.</p><p><strong>What I Learned:</strong> I learned the importance of speaking clearly, planning ideas before recording, and how podcasting makes information more accessible and enjoyable.</p>`},
-    { key:'maths', icon:'📐', title:'Maths', preview:'Integers, algebra, binary code, and trigonometry.', effect:'maths', accent:'#f9e27e', bg:'#120e00', html:`<h3>Numbers, Logic and Trigonometry</h3><p>Maths combined everyday number work with the logic of algebra and the precision of trigonometry.</p><h4>Term One</h4><p>In our very first class, we wrote our names in binary code — the language computers use. This connected maths with technology and sparked curiosity about how numbers represent information.</p><p>We covered integers including properties and operations, then revisited basic algebra with simple expressions and equations. Maths Week activities included puzzles, competitions, and problem-solving games.</p><h4>Term Three — Trigonometry</h4><p>We continued with trigonometry, practising sine, cosine, and tangent to solve problems with right-angled triangles. We learned to identify opposite, adjacent, and hypotenuse sides quickly and choose the correct trig ratio for each question.</p><p><strong>What I Learned:</strong> I improved my problem-solving skills and became more comfortable using formulas correctly. Trigonometry has real-life measurement applications.</p>`},
-    { key:'religious', icon:'🕊️', title:'Religious Education', preview:'Justice, peace, moral decision-making, and remembrance.', effect:'re', accent:'#c9b3f9', bg:'#0c0818', html:`<h3>Justice, Peace and Reflection</h3><p>Religious Education explored beliefs, ritual and moral decision-making across traditions.</p><p>We researched the importance of water in various religions — its symbolic and practical significance in rituals, purification, and spiritual meaning.</p><h4>Festival of Remembrance</h4><p>To honour loved ones who have passed away, we created autumn-themed leaves from paper and wrote names of the departed on them — part of the reflective Festival of Remembrance.</p><h4>Meditation & Prayer</h4><p>We visited the prayer room for meditation and quiet reflection, praying for our departed loved ones and fostering a sense of peace and connection.</p>`},
+    { key:'maths', icon:'📐', title:'Maths', preview:'Integers, algebra, binary code, and trigonometry.', effect:'maths', accent:'#f9e27e', bg:'#120e00', html:`<h3>Numbers, Logic and Trigonometry</h3><p>Maths combined everyday number work with the logic of algebra and the precision of trigonometry.</p><h4>Term One</h4><p>In our very first class, we wrote our names in binary code — the language computers use. This connected maths with technology and sparked curiosity about how numbers represent information.</p><p>We covered integers including properties and operations, then revisited basic algebra with simple expressions and equations. Maths Week activities included puzzles, competitions, and problem-solving games.</p><h4>Term Two — Trigonometry</h4><div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;margin-bottom:16px;"><p style="flex:1;min-width:260px;margin:0;">We continued with trigonometry, practising sine, cosine, and tangent to solve problems with right-angled triangles. We learned to identify opposite, adjacent, and hypotenuse sides quickly and choose the correct trig ratio for each question.</p><img src="file:///C:/Users/herob/.cursor/projects/c-Website/assets/c__Users_herob_AppData_Roaming_Cursor_User_workspaceStorage_empty-window_images_Maths1-e4f47f1a-7af8-4cc0-92f8-991ecfa84b97.png" alt="Term Two trigonometry notes" style="width: 260px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); flex:0 0 260px;"></div><h4>Term Three</h4><div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;margin-bottom:16px;"><p style="flex:1;min-width:260px;margin:0;">By the third term, most maths classes didn’t take place due to the musical, so we didn’t cover new material or do much revision.</p><img src="file:///C:/Users/herob/.cursor/projects/c-Website/assets/c__Users_herob_AppData_Roaming_Cursor_User_workspaceStorage_empty-window_images_Maths2-a3214137-911e-4901-8ed5-3446df4b0059.png" alt="Term Three maths notes" style="width: 260px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); flex:0 0 260px;"></div><p><strong>What I Learned:</strong> I improved my problem-solving skills and became more comfortable using formulas correctly. Trigonometry has real-life measurement applications.</p>`},
+    { key:'religious', icon:'🕊️', title:'Religious Education', preview:'Justice, peace, moral decision-making, and remembrance.', effect:'re', accent:'#c9b3f9', bg:'#0c0818', html:`<h3>Justice, Peace and Reflection</h3><p>Religious Education explored beliefs, ritual and moral decision-making across traditions.</p><p>We researched the importance of water in various religions — its symbolic and practical significance in rituals, purification, and spiritual meaning.</p><h4>Festival of Remembrance</h4><div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;margin-bottom:16px;"><p style="flex:1;min-width:260px;margin:0;">To honour loved ones who have passed away, we created autumn-themed leaves from paper and wrote names of the departed on them — part of the reflective Festival of Remembrance.</p><img src="file:///C:/Users/herob/.cursor/projects/c-Website/assets/c__Users_herob_AppData_Roaming_Cursor_User_workspaceStorage_empty-window_images_Religious_education-b5a7109a-b0f2-416a-b980-fb51b815ccf3.png" alt="Religious Education remembrance leaf" style="width:260px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);flex:0 0 260px;"></div><h4>Meditation & Prayer</h4><p>We visited the prayer room for meditation and quiet reflection, praying for our departed loved ones and fostering a sense of peace and connection.</p>`},
     { key:'pe', icon:'🏊', title:'Physical Education', preview:'Team sports and swimming at Ballina Swimming Club.', effect:'pe', accent:'#f97e7e', bg:'#180505', html:`<h3>Team Sports, Walking and Swimming</h3><p>PE gave us a strong introduction to fitness, teamwork and specialised swimming training.</p><h4>Opening Activity</h4><p>Our first class involved a long walk outside school around the main road — a great way to warm up and explore the local area as a group.</p><h4>Team Sports Competition</h4><p>TY students split into six teams and competed in hockey, basketball, and football. The friendly competition encouraged teamwork, sportsmanship, and skill development.</p><h4>Swimming Programme</h4><p>From the third class onwards, students split into two groups for nine weeks. I joined the swimming group at Ballina Swimming Club, improving my swimming skills and fitness. The other group attended golf lessons.</p>`},
-    { key:'computers', icon:'💻', title:'Computers', preview:'Scratch, Microbit, and hands-on coding projects.', effect:'computers', accent:'#7ec9f9', bg:'#030e1a', html:`<h3>Scratch, Microbit and Hardware</h3><p>Computers gave me a hands-on introduction to coding and physical computing.</p><h4>Scratch — The Foundations</h4><p>We started with Scratch, a visual programming language that teaches fundamental coding concepts through interactive and creative projects.</p><img src="images/microbit.png" style="float: right; margin-left: 20px; margin-bottom: 15px; width: 220px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);"><h4>Microbits — Going Hands-On</h4><p>We progressed to Microbits — small programmable devices for controlling lights, sensors, and hardware. This was where coding came alive for me, combining theory with real-world application.</p><h4>Reflection</h4><p>This confirmed my love for coding. The mix of hands-on learning and theory made it genuinely engaging.</p><div class="chip-row"><span class="chip">Scratch</span><span class="chip">Microbit</span><span class="chip">Coding Ireland</span><span class="chip">Hardware</span></div>`},
-    { key:'career', icon:'🧭', title:'Career Guidance', preview:'CareersPortal.ie and career exploration.', effect:'careers', accent:'#f9b97e', bg:'#180900', html:`<h3>CareersPortal and Self-Discovery</h3><p>Career Guidance helped us understand strengths, interests and how to make choices for the future.</p><h4>Self-Assessment Tests</h4><p>We used CareersPortal.ie to complete quizzes about preferences, strengths, and values. With no right or wrong answers, these tests suggested career fields that might suit each of us.</p><h4>Exploring Jobs & Opportunities</h4><p>The site provided detailed information about roles within our areas of interest, including the nature of jobs, required qualifications, and career prospects.</p><h4>Importance of Honesty</h4><p>A key lesson: answer the quizzes truthfully. Honest responses give the most accurate results, which matters when making real decisions about your future.</p>`}
+    { key:'computers', icon:'💻', title:'Computers', preview:'Scratch, Microbit, and hands-on coding projects.', effect:'computers', accent:'#7ec9f9', bg:'#030e1a', html:`<h3>Scratch, Microbit and Hardware</h3><p>Computers gave me a hands-on introduction to coding and physical computing.</p><h4>Scratch — The Foundations</h4><p>We started with Scratch, a visual programming language that teaches fundamental coding concepts through interactive and creative projects.</p><div style="width: 100%; max-width: 600px; height: 500px; margin: 25px auto; border-radius: 24px; overflow: hidden; border: 1px solid rgba(255,255,255,0.15); background: #000; position: relative;"><iframe src="https://makecode.microbit.org/---run?id=_8M4dbTUHD53z" style="position: absolute; top: -60px; left: 0; width: 100%; height: 620px; border: none;" sandbox="allow-popups allow-forms allow-scripts allow-same-origin"></iframe></div><div style="background: rgba(126, 201, 249, 0.08); border-left: 4px solid var(--accent); padding: 20px; border-radius: 0 16px 16px 0; margin: 0 0 25px 0;"><h4 style="margin-top:0; color:var(--accent);">🎮 How to Test My Project</h4><p style="font-size: 0.95rem; color: #ccd6f6;">This simulator runs the actual code I wrote for the Microbit hardware. Here is how to use it:</p><ul style="list-style: none; padding: 0; font-size: 0.95rem;"><li style="margin-bottom: 8px;">🔘 <strong>Buttons A & B:</strong> Press these to cycle through the different display modes I programmed.</li><li>✨ <strong>Logo Touch:</strong> Click the gold logo at the top to trigger the secret animation.</li></ul></div><h4>Microbits — Going Hands-On</h4><p>We progressed to Microbits — small programmable devices for controlling lights, sensors, and hardware. This was where coding came alive for me, combining theory with real-world application.</p><h4>Reflection</h4><p>This confirmed my love for coding. The mix of hands-on learning and theory made it genuinely engaging.</p><div class="chip-row"><span class="chip">Scratch</span><span class="chip">Microbit</span><span class="chip">Coding Ireland</span><span class="chip">Hardware</span></div>`},
+    { key:'career', icon:'🧭', title:'Career Guidance', preview:'CareersPortal.ie and career exploration.', effect:'careers', accent:'#f9b97e', bg:'#180900', html:`<h3>CareersPortal and Self-Discovery</h3><p>Career Guidance helped us understand strengths, interests and how to make choices for the future.</p><h4>Self-Assessment Tests</h4><div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;margin-bottom:16px;"><p style="flex:1;min-width:260px;margin:0;">We used CareersPortal.ie to complete quizzes about preferences, strengths, and values. With no right or wrong answers, these tests suggested career fields that might suit each of us.</p><img src="file:///C:/Users/herob/.cursor/projects/c-Website/assets/c__Users_herob_AppData_Roaming_Cursor_User_workspaceStorage_empty-window_images_Self_assessment-47717391-ac0d-4db0-83c1-8931aa8f4729.png" alt="Self-assessment career profile chart" style="width:320px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);flex:0 0 320px;"></div><h4>Exploring Jobs & Opportunities</h4><div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;margin-bottom:16px;"><p style="flex:1;min-width:260px;margin:0;">The site provided detailed information about roles within our areas of interest, including the nature of jobs, required qualifications, and career prospects.</p><img src="file:///C:/Users/herob/.cursor/projects/c-Website/assets/c__Users_herob_AppData_Roaming_Cursor_User_workspaceStorage_empty-window_images_Exploring_Jobs_and_Opportunities-d9009a88-c05d-43bb-aaa4-18c64fecd9f9.png" alt="Top career sectors results" style="width:320px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);flex:0 0 320px;"></div><h4>Importance of Honesty</h4><p>A key lesson: answer the quizzes truthfully. Honest responses give the most accurate results, which matters when making real decisions about your future.</p>`}
   ],
   rot:[
     { key:'art', icon:'🎨', title:'Art', preview:'Shading techniques and papier-mâché fish sculptures.', effect:'art', accent:'#c8f97e', bg:'#0e1200', html:`<h3>Shading and Sculpture</h3><p>Art blended drawing skills with a tactile sculpture project.</p><img src="images/shading.jpg" style="float: right; margin-left: 20px; margin-bottom: 15px; width: 200px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);"><h4>Shading Techniques</h4><p>We practised shading in sketchbooks, learning to create different tones and textures using pencils to give drawings depth and form.</p><h4>Fish Sculpture Project</h4><p>We made fish sculptures using barbed wire, newspaper, and glue through the papier-mâché technique — building each sculpture layer by layer over a wire frame.</p><h4>Adding Details</h4><p>We added fins made from reflective paper to give the fish a lifelike, shiny finish. The project combined drawing, 3D construction, and creative use of materials.</p>`},
     { key:'climate', icon:'🌿', title:'Climate Action & Sustainability', preview:'Air quality experiments and Mayo County Council video campaign.', effect:'climate', accent:'#5dff8a', bg:'#031408', html:`<img src="images/car.jpg" style="float: right; margin-left: 20px; margin-bottom: 15px; width: 200px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);"><h3>Air Quality and Community Campaigns</h3><p>Climate Action focused on local science and environmental awareness.</p><h4>Harmful Emissions</h4><p>We discussed nitrogen oxides from car emissions and their damage to the environment, contributing to pollution and climate change.</p><h4>Air Quality Experiment</h4><p>We placed three test tubes in areas of no traffic, moderate traffic, and heavy traffic around school. Sent to Globe Ireland lab for analysis, results showed how pollution varies with traffic — data potentially useful to organisations like An Taisce.</p><h4>Campaign Project</h4><p>We created a video campaign promoting anti-littering and anti-graffiti initiatives for Mayo County Council, encouraging our community to protect the local environment.</p>`},
-    { key:'chemistry', icon:'⚗️', title:'Chemistry', preview:'Alkali metals, flame tests, chromatography, and titration.', effect:'chemistry', accent:'#7ec9f9', bg:'#020a1a', html:`<h3>Laboratory Work and Reactions</h3><p>Chemistry explored experiments, observation and practical lab techniques.</p><iframe width="180" height="320" src="https://www.youtube.com/embed/BXzd1fJ3gwA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="float: right; margin-left: 20px; margin-bottom: 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);"></iframe><h4>Periodic Table & Alkali Metals</h4><p>We studied the periodic table and focused on alkali metals like sodium and potassium, observing their reaction with water — fizzing vigorously and producing hydrogen gas.</p><img src="images/flame.jpg" style="float: right; margin-left: 20px; margin-bottom: 15px; width: 220px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);"><h4>Flame Test Experiment</h4><p>We burned different chemical salts including sodium chloride, lithium chloride, and strontium chloride. Each element produced a distinct colour in the flame, letting us identify substances visually.</p><iframe width="180" height="320" src="https://www.youtube.com/embed/511s7WjanwU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="float: right; margin-left: 20px; margin-bottom: 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);"></iframe><h4>Chromatography</h4><p>Using chromatography paper, we separated different inks to show how mixtures can be divided based on the rates substances travel through the paper.</p><h4>Titration & Reaction Rates</h4><p>We performed titration to measure concentrations accurately, and explored how the concentration of sodium thiosulphate affects its reaction rate with hydrochloric acid.</p>`},
+    { key:'chemistry', icon:'⚗️', title:'Chemistry', preview:'Alkali metals, flame tests, chromatography, and titration.', effect:'chemistry', accent:'#7ec9f9', bg:'#020a1a', html:`<h3>Laboratory Work and Reactions</h3><p>Chemistry explored experiments, observation and practical lab techniques.</p><div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;margin-bottom:16px;"><div style="flex:1;min-width:260px;"><h4>Periodic Table & Alkali Metals</h4><p>We studied the periodic table and focused on alkali metals like sodium and potassium, observing their reaction with water — fizzing vigorously and producing hydrogen gas.</p></div><video controls style="width:260px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);flex:0 0 260px;"><source src="file:///C:/Users/herob/Downloads/Periodic%20Table%20and%20Alkali%20Metals.mp4" type="video/mp4"></video></div><div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;margin-bottom:16px;"><div style="flex:1;min-width:260px;"><h4>Flame Test Experiment</h4><p>We burned different chemical salts including sodium chloride, lithium chloride, and strontium chloride. Each element produced a distinct colour in the flame, letting us identify substances visually.</p></div><img src="images/flame.jpg" alt="Flame test experiment" style="width: 260px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); flex:0 0 260px;"></div><div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;margin-bottom:16px;"><div style="flex:1;min-width:260px;"><h4>Chromatography</h4><p>Using chromatography paper, we separated different inks to show how mixtures can be divided based on the rates substances travel through the paper.</p></div><div style="display:grid;gap:12px;flex:0 0 260px;"><img src="file:///C:/Users/herob/.cursor/projects/c-Website/assets/c__Users_herob_AppData_Roaming_Cursor_User_workspaceStorage_empty-window_images_Chromatography-8a329a86-b836-4587-a432-491a6b45b489.png" alt="Chromatography experiment strip" style="width:260px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);"><video controls style="width:260px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);"><source src="file:///C:/Users/herob/Downloads/Chromatography.mp4" type="video/mp4"></video></div></div><h4>Titration & Reaction Rates</h4><p>We performed titration to measure concentrations accurately, and explored how the concentration of sodium thiosulphate affects its reaction rate with hydrochloric acid.</p>`},
     { key:'firstaid', icon:'🩺', title:'First Aid', preview:'CPR, AED training, heart attack vs cardiac arrest.', effect:'firstaid', accent:'#ff8080', bg:'#180202', html:`<h3>Life-Saving Skills</h3><p>First Aid taught practical CPR, AED use and emergency care awareness.</p><h4>CPR Training</h4><p>We practised CPR on adults and babies without rescue breaths, focusing on effective chest compressions to maintain blood flow until professional help arrives.</p><h4>Heart Attack vs Cardiac Arrest</h4><ul><li>Heart attack: blood flow to the heart is blocked but it may still be beating</li><li>Cardiac arrest: the heart suddenly stops; requires immediate CPR and defibrillation</li></ul><img src="images/aed.png" style="float: right; margin-left: 20px; margin-bottom: 15px; width: 180px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);"><h4>Using an AED</h4><p>We learned safe AED use on adults and infants, including correct pad placement and following the device's step-by-step instructions in an emergency.</p><h4>Practical Sessions</h4><p>Hands-on work with mannequins and AED trainers built real confidence — these are skills that can genuinely save a life.</p>`},
-    { key:'media', icon:'📰', title:'Media Studies', preview:'Digital editor of the TY school newsletter.', effect:'media', accent:'#f9e27e', bg:'#181000', html:`<h3>Newsletter Production</h3><p>Media Studies focussed on writing, editing and digital publishing.</p><h4>TY Newsletter Project</h4><p>Our main project was creating a Transition Year newsletter for the school. Each student wrote articles covering school activities, news, and events.</p><h4>My Role: Digital Editor</h4><p>I took on the role of digital editor — designing the layout, organising articles, and producing the final polished product for the school community.</p><div class="chip-row"><span class="chip">Layout Design</span><span class="chip">Digital Publishing</span><span class="chip">Editing</span><span class="chip">Collaboration</span></div>`},
-    { key:'graphics', icon:'🖥️', title:'Graphics', preview:'Onshape CAD — phone, holder, and Christmas models.', effect:'graphics', accent:'#7ef9f0', bg:'#021818', html:`<h3>CAD Design and Precision</h3><p>Graphics introduced computer-aided design through practical modelling work.</p><h4>Onshape CAD Projects</h4><p>We used Onshape CAD to design a variety of projects — a phone, a phone holder, and Christmas decorations including a Christmas tree and ice crystal. This gave us practice in both practical and creative 3D design.</p><h4>Skills Developed</h4><p>CAD skills including sketching, shaping, and designing objects accurately. I learned how computer-aided design is used to create real-world products and decorative items.</p><h4>What I Learned</h4><p>I learned how to turn ideas into digital models and how important precision is in design.</p><div class="chip-row"><span class="chip">Onshape CAD</span><span class="chip">3D Design</span><span class="chip">Precision</span></div>`},
+    { key:'media', icon:'📰', title:'Media Studies', preview:'Digital editor of the TY school newsletter.', effect:'media', accent:'#f9e27e', bg:'#181000', html:`<h3>Newsletter Production</h3><p>Media Studies focussed on writing, editing and digital publishing.</p><h4>TY Newsletter Project</h4><div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;margin-bottom:16px;"><p style="flex:1;min-width:260px;margin:0;">Our main project was creating a Transition Year newsletter for the school. Each student wrote articles covering school activities, news, and events.</p><div style="flex:0 0 320px;"><iframe src="file:///C:/Users/herob/Downloads/TY%20Newsletter%20October-November%20issue.pdf" title="TY Newsletter PDF" style="width:100%;height:340px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);background:#fff;"></iframe></div></div><h4>My Role: Digital Editor</h4><p>I took on the role of digital editor — designing the layout, organising articles, and producing the final polished product for the school community.</p><div class="chip-row"><span class="chip">Layout Design</span><span class="chip">Digital Publishing</span><span class="chip">Editing</span><span class="chip">Collaboration</span></div>`},
+    { key:'graphics', icon:'🖥️', title:'Graphics', preview:'Onshape CAD — phone, holder, and Christmas models.', effect:'graphics', accent:'#7ef9f0', bg:'#021818', html:`<h3>CAD Design and Precision</h3><p>Graphics introduced computer-aided design through practical modelling work.</p><div style="display:flex;gap:14px;flex-wrap:wrap;align-items:flex-start;justify-content:center;margin-bottom:20px;"><img src="file:///C:/Users/herob/.cursor/projects/c-Website/assets/c__Users_herob_AppData_Roaming_Cursor_User_workspaceStorage_empty-window_images_Screenshot_2026-05-07_153758-d129f4f3-fca1-4672-9531-492a4e196d9a.png" alt="CAD model screenshot 1" style="width:min(32%,300px);border-radius:12px;border:1px solid rgba(255,255,255,0.1);"><img src="file:///C:/Users/herob/.cursor/projects/c-Website/assets/c__Users_herob_AppData_Roaming_Cursor_User_workspaceStorage_empty-window_images_Screenshot_2026-05-07_153706-15d604f0-60de-45c3-a3a0-3b93c8a2d1e1.png" alt="CAD model screenshot 2" style="width:min(32%,300px);border-radius:12px;border:1px solid rgba(255,255,255,0.1);"><img src="file:///C:/Users/herob/.cursor/projects/c-Website/assets/c__Users_herob_AppData_Roaming_Cursor_User_workspaceStorage_empty-window_images_Screenshot_2026-05-07_153907-ab45581a-e684-406f-8679-5ed02e27d772.png" alt="CAD model screenshot 3" style="width:min(32%,300px);border-radius:12px;border:1px solid rgba(255,255,255,0.1);"></div><h4>Onshape CAD Projects</h4><p>We used Onshape CAD to design a variety of projects — a phone, a phone holder, and Christmas decorations including a Christmas tree and ice crystal. This gave us practice in both practical and creative 3D design.</p><h4>Skills Developed</h4><p>CAD skills including sketching, shaping, and designing objects accurately. I learned how computer-aided design is used to create real-world products and decorative items.</p><h4>What I Learned</h4><p>I learned how to turn ideas into digital models and how important precision is in design.</p><div class="chip-row"><span class="chip">Onshape CAD</span><span class="chip">3D Design</span><span class="chip">Precision</span></div>`},
     { key:'business', icon:'💼', title:'Business', preview:'Household and business insurance types.', effect:'business', accent:'#5dff8a', bg:'#021408', html:`<h3>Insurance and Risk</h3><p>Business covered the types of insurance that protect homes, people and companies.</p><h4>Household Insurance</h4><p>We covered home insurance, content insurance, and renters insurance — all designed to protect a home, the items inside it, and people renting a property.</p><h4>Business Insurance</h4><ul><li>General/Public Liability: protects against claims from members of the public</li><li>Employers' Liability: covers injury or illness to employees</li><li>Cyber Liability: protects against cyberattacks, data breaches, and system damage</li></ul><h4>What I Learned</h4><p>Insurance protects people and businesses from unexpected costs. Different situations need different types of cover.</p>`},
     { key:'agscience', icon:'🌱', title:'Agricultural Science', preview:'Germination experiments and plant microscopy.', effect:'agscience', accent:'#c8b47e', bg:'#100d02', html:`<h3>Plants and Experiments</h3><p>Agricultural Science linked biology with practical farming and plant studies.</p><h4>Germination Experiment</h4><p>We investigated the effect of water, oxygen, and temperature on germination using cress seeds — showing how important the right conditions are for a seed to begin growing.</p><h4>Plant Microscopy</h4><p>We studied the cross section of a dicotyledonous stem and a leaf under the microscope, identifying different parts of plant structure more clearly.</p><h4>What I Learned</h4><p>Plants need specific conditions to grow successfully. Linking microscope observations to classroom theory strengthened my understanding of plant anatomy.</p>`},
     { key:'community', icon:'🤝', title:'Community Care', preview:'Sonas carol service and environmental action.', effect:'communitycare', accent:'#7ef9e8', bg:'#021414', html:`<h3>Care, Music and Action</h3><p>Community Care was a chance to support people and contribute to local projects.</p><h4>Christmas Carol Service at Sonas</h4><p>We performed music and dance at Sonas Nursing Home for the residents — a genuinely enjoyable experience showing the positive impact of sharing with the local community.</p><h4>Young Environmentalist Award</h4><p>We entered the Young Environmentalist Award, working on an important environmental project and thinking critically about sustainability in our community.</p><h4>What I Learned</h4><p>The importance of giving back and taking part in activities that bring people together. This subject improved my teamwork, communication, and confidence.</p>`},
     { key:'technical', icon:'📐', title:'Technical Graphics', preview:'File types and a precision keytag project.', effect:'techgraphics', accent:'#d0d0e0', bg:'#101012', html:`<h3>Precision Drawing and Design</h3><p>Technical Graphics taught the importance of accuracy in drawing and file preparation.</p><h4>Tools & File Types</h4><p>We started by learning about different types of tools and digital file formats, building a solid foundation for design work.</p><h4>Keytag Project</h4><p>We designed a keytag with our name — featuring a curved corner, two sharp corners, and a 45-degree angle. This practised combining different shapes and angles with precision.</p><h4>What I Learned</h4><p>I learned how to combine different corner types and angles effectively, and understood why precision and the right file types matter in technical drawing.</p>`},
-    { key:'homeec', icon:'🍳', title:'Home Economics', preview:'Paella, pizza from scratch, and kitchen confidence.', effect:'homeec', accent:'#f9c07e', bg:'#180a02', html:`<h3>Cooking and Confidence</h3><p>Home Economics was about practical food preparation and kitchen skills.</p><h4>Paella & Pizza</h4><p>We prepared paella rice with chicken and chorizo — a traditional Spanish dish. We also made pizza from scratch, including the dough, toppings, and baking.</p><h4>What I Learned</h4><p>I learned to follow recipes accurately while adapting to different cooking techniques, and understood the importance of timing, temperature control, and food safety.</p><h4>Skills Developed</h4><p>Knife skills, cooking methods, and presentation all improved. These classes gave me real confidence in the kitchen.</p>`},
+    { key:'homeec', icon:'🍳', title:'Home Economics', preview:'Paella, pizza from scratch, and kitchen confidence.', effect:'homeec', accent:'#f9c07e', bg:'#180a02', html:`<h3>Cooking and Confidence</h3><p>Home Economics was about practical food preparation and kitchen skills.</p><h4>Paella & Pizza</h4><div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;margin-bottom:16px;"><p style="flex:1;min-width:260px;margin:0;">We prepared paella rice with chicken and chorizo — a traditional Spanish dish. We also made pizza from scratch, including the dough, toppings, and baking.</p><div style="display:flex;gap:12px;flex-wrap:wrap;flex:0 0 300px;"><img src="file:///C:/Users/herob/.cursor/projects/c-Website/assets/c__Users_herob_AppData_Roaming_Cursor_User_workspaceStorage_empty-window_images_paella-3a18da12-aca2-4fb8-b4d4-9031880a2f3c.png" alt="Paella dish" style="width:144px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);"><img src="file:///C:/Users/herob/.cursor/projects/c-Website/assets/c__Users_herob_AppData_Roaming_Cursor_User_workspaceStorage_empty-window_images_pizza-817db6f2-9d8c-468e-bb30-34e7694c0b93.png" alt="Homemade pizza" style="width:144px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);"></div></div><h4>What I Learned</h4><p>I learned to follow recipes accurately while adapting to different cooking techniques, and understood the importance of timing, temperature control, and food safety.</p><h4>Skills Developed</h4><p>Knife skills, cooking methods, and presentation all improved. These classes gave me real confidence in the kitchen.</p>`},
     { key:'history', icon:'📜', title:'History', preview:'The 9/11 attacks and their global impact.', effect:'history', accent:'#c8a060', bg:'#120800', html:`<h3>Modern History and Impact</h3><p>History explored a major global event and its long-term consequences.</p><h4>The 9/11 Attacks</h4><p>We studied the September 11, 2001 terrorist attacks — when hijackers crashed two planes into the World Trade Center towers in New York, causing them to collapse. We examined the events of that day, the global impact, and how it changed security, politics, and international relations worldwide.</p><h4>What I Learned</h4><p>I learned about the causes of terrorism, the immediate effects on America and the world, and how major events shape history. It showed me how one day can change everything.</p><h4>Skills Developed</h4><p>Research skills, understanding of cause and effect in historical events, and critical thinking about global issues.</p>`},
-    { key:'biology', icon:'🔬', title:'Biology', preview:'Cells, genetics, and the human eye.', effect:'biology', accent:'#7ef9a0', bg:'#021008', html:`<h3>Cells, Genetics and Sight</h3><p>Biology covered the building blocks of life and human anatomy.</p><h4>Cells</h4><p>We studied cell structure and function under the microscope, examining the nucleus, mitochondria, and cell membrane — the basic building blocks of all living things.</p><h4>Genetics</h4><p>We explored DNA, chromosomes, and inheritance patterns — learning how genetic information is passed from parents to offspring and why we inherit certain traits.</p><h4>The Human Eye</h4><p>We studied the cornea, lens, retina, and how light is focused to create images — understanding how the eye converts light into electrical signals the brain interprets as vision.</p><h4>Skills Developed</h4><p>Microscope skills, scientific diagram interpretation, and the ability to connect different biological systems.</p>`}
+    { key:'biology', icon:'🔬', title:'Biology', preview:'Cells, genetics, and the human eye.', effect:'biology', accent:'#7ef9a0', bg:'#021008', html:`<h3>Cells, Genetics and Sight</h3><p>Biology covered the building blocks of life and human anatomy.</p><h4>Cells</h4><p>We studied cell structure and function under the microscope, examining the nucleus, mitochondria, and cell membrane — the basic building blocks of all living things.</p><h4>Genetics</h4><p>We explored DNA, chromosomes, and inheritance patterns — learning how genetic information is passed from parents to offspring and why we inherit certain traits.</p><h4>The Human Eye</h4><div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;margin-bottom:16px;"><p style="flex:1;min-width:200px;margin:0;">We studied the cornea, lens, retina, and how light is focused to create images — understanding how the eye converts light into electrical signals the brain interprets as vision.</p><img src="images/eye.jpg" alt="Human Eye Anatomy" style="width:220px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);flex:0 0 220px;"></div><h4>Skills Developed</h4><p>Microscope skills, scientific diagram interpretation, and the ability to connect different biological systems.</p>`}
   ],
   mod:[
     { key:'swimming', icon:'🏊', title:'Swimming & Lifesaving', preview:'Ballina Swimming Club — lifesaving and water safety.', effect:'swimming', accent:'#7ec9f9', bg:'#020c1a', html:`<h3>Lifesaving and Water Safety</h3><p>Swimming & Lifesaving taught practical rescue and pool safety skills.</p><h4>Lifesaving Techniques</h4><p>We learned to use lifebuoy and flotation aids — keeping a drowning person afloat safely until help arrives. We practised assisting someone in distress without putting ourselves at risk.</p><h4>Key Steps</h4><ul><li>Recognise signs of drowning and distress quickly</li><li>Stay calm and call for help immediately</li><li>Use flotation devices like lifebuoys to provide support</li><li>Give clear instructions to keep the person calm</li><li>Avoid risky direct rescues unless trained and safe to do so</li></ul>`},
-    { key:'golf', icon:'⛳', title:'Golf', preview:'10 weeks of golf basics and course technique.', effect:'golf', accent:'#a8e060', bg:'#061400', html:`<h3>Golf Fundamentals</h3><p>Golf introduced course technique and precision practice.</p><h4>Learning the Basics</h4><p>Over 10 weeks as a complete beginner, I learned different swings, putting techniques, and how to move around the course safely and correctly.</p><h4>What I Learned</h4><p>The rules of golf, how to hold and swing the club correctly, and the importance of focus and patience. Practice is the key to improving coordination and consistency.</p><h4>Skills Developed</h4><p>Hand-eye coordination, balance, and concentration. Learning golf also built perseverance and the ability to stay calm under pressure.</p>`},
+    { key:'golf', icon:'⛳', title:'Golf', preview:'10 weeks of golf basics and course technique.', effect:'golf', accent:'#a8e060', bg:'#061400', html:`<h3>Golf Fundamentals</h3><p>Golf introduced course technique and precision practice.</p><h4>Learning the Basics</h4><div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;margin-bottom:16px;"><p style="flex:1;min-width:200px;margin:0;">Over 10 weeks as a complete beginner, I learned different swings, putting techniques, and how to move around the course safely and correctly.</p><img src="images/Golf.jpg" alt="Golf course" style="width:220px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);flex:0 0 220px;"></div><h4>What I Learned</h4><p>The rules of golf, how to hold and swing the club correctly, and the importance of focus and patience. Practice is the key to improving coordination and consistency.</p><h4>Skills Developed</h4><p>Hand-eye coordination, balance, and concentration. Learning golf also built perseverance and the ability to stay calm under pressure.</p>`},
     { key:'gym', icon:'🏋️', title:'Gym', preview:'Core and strength training sessions.', effect:'gym', accent:'#ff6060', bg:'#0f0505', html:`<h3>Strength, Core and Conditioning</h3><p>Gym sessions focused on building strength and safe training habits.</p><h4>Training Sessions</h4><p>Gym sessions targeted core and muscle strength through planks, crunches, weight training, and other strength-building workouts.</p><h4>What I Learned</h4><p>Proper exercise techniques, how to warm up and cool down safely, and why core strength is important for overall fitness and injury prevention.</p><h4>Skills Developed</h4><p>Physical strength, endurance, and body awareness. Gym work also taught me discipline and consistency.</p>`}
   ],
   more:[
-    { key:'induction', icon:'🥊', title:'Induction Day', preview:'Martial arts, percussion, and team-building on day one.', effect:'events', accent:'#f9e27e', bg:'#141000', html:`<h3>Induction and Team-Building</h3><p>The first day of TY was full of movement, music and making new friends.</p><p>The 2025–26 TY welcomed 59 students across three classes: St. Blessedinas, St. Michaels, and St. Antony's.</p><h4>Martial Arts & Boxing</h4><p>Warm-up races and hurdles, then punching, kicking, and blocking techniques. Pad work with combinations of moves followed, plus partner exercises to bond with new classmates.</p><h4>Percussion Workshop</h4><p>We learned to clap different beats and played tamboo bamboo — traditional plastic tube instruments from Trinidad and Tobago.</p><h4>Team Building Games</h4><p>Ice-breakers, relay Connect Four, a "floor is lava" challenge across the basketball courts, and basic gymnastics to finish.</p>`},
-    { key:'wildlands', icon:'🌲', title:'Wildlands Trip', preview:'Ziplines, wall climbing, trampolines, and disc golf in Moycullen.', effect:'events', accent:'#7ef9c0', bg:'#141000', html:`<h3>Adventure and Challenges</h3><p>The Wildlands trip combined outdoor problem solving with adrenaline activities.</p><h4>Activities</h4><ul><li>Challenge Rooms: problem-solving puzzles requiring teamwork under time pressure</li><li>Zipline: gliding across the treetops at speed with a stunning view below</li><li>Trampoline Park: jumping and tricks for balance and coordination</li><li>Wall Climbing: strength, endurance, and finding the best route up</li><li>Disc Golf: precision, strategy, and hand-eye coordination outdoors</li></ul>`},
+    { key:'induction', icon:'🥊', title:'Induction Day', preview:'Martial arts, percussion, and team-building on day one.', effect:'events', accent:'#f9e27e', bg:'#141000', html:`<h3>Induction and Team-Building</h3><p>The first day of TY was full of movement, music and making new friends.</p><p>The 2025–26 TY welcomed 59 students across three classes: St. Blessedinas, St. Michaels, and St. Antony's.</p><h4>Martial Arts & Boxing</h4><p>Warm-up races and hurdles, then punching, kicking, and blocking techniques. Pad work with combinations of moves followed, plus partner exercises to bond with new classmates.</p><h4>Percussion Workshop</h4><div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;margin-bottom:16px;"><p style="flex:1;min-width:260px;margin:0;">We learned to clap different beats and played tamboo bamboo — traditional plastic tube instruments from Trinidad and Tobago.</p><img src="images/music percussion.jpg" alt="Percussion Workshop" style="width:300px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);flex:0 0 300px;"></div><h4>Team Building Games</h4><p>Ice-breakers, relay Connect Four, a "floor is lava" challenge across the basketball courts, and basic gymnastics to finish.</p>`},
+    { key:'wildlands', icon:'🌲', title:'Wildlands Trip', preview:'Ziplines, wall climbing, trampolines, and disc golf in Moycullen.', effect:'events', accent:'#7ef9c0', bg:'#141000', html:`<h3>Adventure and Challenges</h3><div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;margin-bottom:16px;"><p style="flex:1;min-width:260px;margin:0;">The Wildlands trip combined outdoor problem solving with adrenaline activities.</p><img src="images/group.jpg" alt="Wildlands Group Photo" style="width:300px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);flex:0 0 300px;"></div><h4>Activities</h4><ul><li>Challenge Rooms: problem-solving puzzles requiring teamwork under time pressure</li><li>Zipline: gliding across the treetops at speed with a stunning view below</li><li>Trampoline Park: jumping and tricks for balance and coordination</li><li>Wall Climbing: strength, endurance, and finding the best route up</li><li>Disc Golf: precision, strategy, and hand-eye coordination outdoors</li></ul>`},
     { key:'careers-school', icon:'👔', title:'Careers Event — School', preview:'Engineering, plumbing, and steel fabrication talks.', effect:'events', accent:'#f9b97e', bg:'#141000', html:`<h3>Industry Talks</h3><p>At the school careers event, three professionals explained their fields.</p><h4>Engineering Professor</h4><p>Skills: Problem-solving, creativity, technical knowledge | Subjects: Maths, Physics, Chemistry | Route in: Engineering degree plus relevant certifications</p><h4>Plumber</h4><p>Skills: Practical ability, attention to detail, adaptability | Subjects: Technology, Construction Studies, Maths | Route in: Apprenticeship, vocational training, certification</p><h4>Steel Fabricator</h4><p>Skills: Precision, strength, metalwork and safety knowledge | Subjects: Technology, Metalwork, Maths | Route in: Trade qualifications, apprenticeships, on-the-job training</p>`},
     { key:'careers-claremorris', icon:'🎓', title:'Careers Event — Claremorris', preview:'College talks and course information from many institutions.', effect:'events', accent:'#7ec9f9', bg:'#141000', html:`<h3>College Advice and Options</h3><p>We attended a large auditorium where representatives from many colleges gave talks about their courses — covering what each involves, entry requirements, and career opportunities.</p><h4>What I Learned</h4><p>A wide range of courses and what skills and qualifications are needed for different careers. Helped me think about what type of course might suit me after secondary school.</p><h4>Skills Developed</h4><p>Listening, note-taking, and researching college options.</p>`},
-    { key:'selfdefence', icon:'🥋', title:'Self Defence', preview:'10 weeks of practical self-defence techniques.', effect:'events', accent:'#f97e7e', bg:'#141000', html:`<h3>Practical Defence Training</h3><p>Self Defence taught practical moves and how to stay safe.</p><h4>10 Weeks of Training</h4><p>We had a class every week for 10 weeks, learning different kinds of locks and practical techniques to defend ourselves in dangerous situations.</p><h4>What I Learned</h4><p>How to break free from holds, use simple locks effectively, and stay calm under pressure.</p><h4>Skills Developed</h4><p>Physical awareness, quick thinking, self-confidence, and situational awareness.</p>`},
-    { key:'dancing', icon:'💃', title:'Social Dancing', preview:'Waltz, line dancing, and a competition on 29th January.', effect:'events', accent:'#f9c9f9', bg:'#141000', html:`<h3>Rhythm and Movement</h3><p>Social Dancing was about coordination, rhythm and working with others.</p><h4>12 Weeks of Classes</h4><p>We learned waltzing and line dancing over 12 weekly classes, practising steps, rhythm, and partner coordination. We also took part in a dancing competition on 29th January.</p><h4>What I Learned</h4><p>The basic steps and timing for waltz and line dance, and how to move confidently with others.</p><h4>Skills Developed</h4><p>Coordination, rhythm, teamwork, and stage presence.</p>`},
+    { key:'selfdefence', icon:'🥋', title:'Self Defence', preview:'10 weeks of practical self-defence techniques.', effect:'events', accent:'#f97e7e', bg:'#141000', html:`<h3>Practical Defence Training</h3><p>Self Defence taught practical moves and how to stay safe.</p><h4>10 Weeks of Training</h4><div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;margin-bottom:16px;"><p style="flex:1;min-width:260px;margin:0;">We had a class every week for 10 weeks, learning different kinds of locks and practical techniques to defend ourselves in dangerous situations.</p><img src="images/self defence.jpg" alt="Self Defence Training" style="width:300px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);flex:0 0 300px;"></div><h4>What I Learned</h4><p>How to break free from holds, use simple locks effectively, and stay calm under pressure.</p><h4>Skills Developed</h4><p>Physical awareness, quick thinking, self-confidence, and situational awareness.</p>`},
+    { key:'dancing', icon:'💃', title:'Social Dancing', preview:'Waltz, line dancing, and a competition on 29th January.', effect:'events', accent:'#f9c9f9', bg:'#141000', html:`<h3>Rhythm and Movement</h3><p>Social Dancing was about coordination, rhythm and working with others.</p><h4>12 Weeks of Classes</h4><div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;margin-bottom:16px;"><p style="flex:1;min-width:260px;margin:0;">We learned waltzing and line dancing over 12 weekly classes, practising steps, rhythm, and partner coordination. We also took part in a dancing competition on 29th January.</p><img src="images/social dancing.jpg" alt="Social Dancing Class" style="width:300px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);flex:0 0 300px;"></div><h4>What I Learned</h4><p>The basic steps and timing for waltz and line dance, and how to move confidently with others.</p><h4>Skills Developed</h4><p>Coordination, rhythm, teamwork, and stage presence.</p>`},
     { key:'forensic', icon:'🔍', title:'Forensic Fun', preview:'JFK assassination, fingerprints, and gunpowder testing.', effect:'events', accent:'#c9b3f9', bg:'#141000', html:`<h3>Investigative Science</h3><p>Forensic Fun introduced crime-scene thinking and evidence analysis.</p><h4>The JFK Assassination</h4><p>A guest speaker told us about the JFK assassination — the whole plot and timeline. We played games to figure out timings, studied types of fingerprints, and tested for traces of gunpowder on our hands using forensic techniques.</p><h4>What I Learned</h4><p>Forensic science investigates crimes by collecting evidence like fingerprints and chemical traces.</p><h4>Skills Developed</h4><p>Observation, logical thinking, and attention to detail.</p>`},
-    { key:'egg', icon:'🥚', title:'Baby Egg Challenge', preview:'A week caring for Rober McCurran — our egg baby.', effect:'events', accent:'#f9e27e', bg:'#141000', html:`<h3>Egg Baby Challenge</h3><p>The Baby Egg Challenge combined creativity with responsibility.</p><h4>Egg Baby Week</h4><p>We cared for a hard-boiled egg for a week, treating it like a baby. We entered four competitions: best cot for the egg, best appearance, an adventure video with the egg, and the least cracked egg at the end.</p><h4>What I Learned</h4><p>Creative problem-solving and time management while caring for something fragile.</p><h4>Skills Developed</h4><p>Creativity (cot and video), teamwork, presentation, and responsibility.</p>`},
+    { key:'egg', icon:'🥚', title:'Baby Egg Challenge', preview:'A week caring for Rober McCurran — our egg baby.', effect:'events', accent:'#f9e27e', bg:'#141000', html:`<h3>Egg Baby Challenge</h3><p>The Baby Egg Challenge combined creativity with responsibility.</p><h4>Egg Baby Week</h4><div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;margin-bottom:16px;"><div style="flex:1;min-width:260px;"><p style="margin:0 0 12px 0;">We cared for a hard-boiled egg for a week, treating it like a baby. We entered four competitions: best cot for the egg, best appearance, an adventure video with the egg, and the least cracked egg at the end.</p></div><video controls style="width:300px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);flex:0 0 300px;"><source src="images/VID-20260507-WA0003.mp4" type="video/mp4"></video></div><h4>What I Learned</h4><p>Creative problem-solving and time management while caring for something fragile.</p><h4>Skills Developed</h4><p>Creativity (cot and video), teamwork, presentation, and responsibility.</p>`},
     { key:'iceskating', icon:'⛸️', title:'Ice Skating', preview:'Sligo on Ice — 15th January.', effect:'events', accent:'#7ec9f9', bg:'#141000', html:`<h3>Skating Day</h3><p>Ice Skating was a fun trip to practise balance and new movement skills.</p><h4>Sligo on Ice</h4><p>We spent the day skating, trying different moves, and having fun with classmates on the ice rink at Sligo on Ice on 15th January.</p><h4>What I Learned</h4><p>Basic skating techniques — balance, gliding, and turning. Practice builds confidence on slippery ice.</p><h4>Skills Developed</h4><p>Balance, coordination, and fearlessness in trying new things.</p>`},
-    { key:'ysi', icon:'🛡️', title:'YSI Trip', preview:'Presenting "Suspect Before Accept" in Sligo — 12th March.', effect:'events', accent:'#5dffa0', bg:'#141000', html:`<h3>Online Safety Project</h3><p>The YSI Trip was a presentation about staying safe online.</p><h4>12th March — Sligo</h4><p>We presented our project "Suspect Before Accept" about staying safe online for teenagers — practical tips for recognising online dangers and protecting ourselves on social media and the internet.</p><h4>What I Learned</h4><p>How to present confidently and explain important safety messages clearly. Real risks like fake profiles, phishing, and cyberbullying, and how to spot them early.</p><div class="chip-row"><span class="chip">Online Safety</span><span class="chip">Public Speaking</span><span class="chip">Teamwork</span></div>`},
-    { key:'environmental', icon:'🌍', title:'Young Environmentalist Awards 2026', preview:'The Green Vision Project — Gortnor Abbey.', effect:'events', accent:'#7ef9c0', bg:'#141000', html:`<h3>Green Vision Project</h3><p>This project combined environmental research with community action.</p><h4>Project: The Green Vision Project</h4><p>Team: Roisin Keane · Julia McCabe · Saoirse Bothwell · Justin Jijo</p><p>School: Jesus and Mary Secondary School, Gortnor Abbey, Crossmolina, Co. Mayo</p><h4>Our Goal</h4><p>To create a Sensory-Sustainable Garden that boosts local biodiversity and student wellbeing.</p><h4>What We Did</h4><ul><li>Carbon Footprint Audit: analysed transport, energy, and waste at school</li><li>Air Quality Testing (GLOBE): tested NO₂ at car drop-off, bus park, and Gaelic pitch</li><li>Surveys: 42 students/staff on transport (58% car, 42% bus, 0% walk/cycle)</li><li>Awareness Campaign: GAP Podcast, posters, and "Be Cool at School" car park signs</li></ul><h4>Community Impact</h4><p>Weekly litter picking with Crossmolina Tidy Towns (won video competition), Christmas talent show for Sonas Nursing Home residents, and a returnable bottle scheme — 85% of students now reuse bottles.</p><h4>UN SDGs</h4><p>SDG 13 — Climate Action | SDG 11 — Sustainable Communities | SDG 15 — Life on Land</p><p><strong>What I Learned:</strong> Teamwork, environmental research, and community engagement. Proud we turned ideas into real action for a greener Gortnor Abbey.</p>`},
-    { key:'explorium', icon:'🚀', title:'Dublin Explorium', preview:'Hydrogen cars, Tesla coils, AI workshops, and agility tests.', effect:'events', accent:'#7ec9f9', bg:'#141000', html:`<h3>Science, Technology and Discovery</h3><p>The Dublin Explorium trip brought hands-on science and innovation to life.</p><h4>Organised by Kinia</h4><p>A brilliant trip packed with interactive exhibits and experiments.</p><h4>Activities</h4><ul><li>Hydrogen Fuel Cell Car: drove a remote-control car powered by clean hydrogen energy</li><li>Tesla Coil: watched high-voltage electricity arcs light up the air</li><li>Agility Test: obstacle courses testing balance, speed, and coordination</li><li>Sprint Test: reaction times and sprint speeds measured with proper sensors</li><li>AI Workshops: hands-on sessions with artificial intelligence and coding challenges</li><li>Optical Illusions: exhibits showing how the brain interprets what we see</li></ul><h4>What I Learned</h4><p>Seeing hydrogen power in real life and understanding how AI makes decisions. It connected everything we learn in school to real-world technology.</p><h4>Skills Developed</h4><p>Problem-solving (AI workshops), quick reactions (agility tests), and teamwork.</p>`}
+    { key:'ysi', icon:'🛡️', title:'YSI Trip', preview:'Presenting "Suspect Before Accept" in Sligo — 12th March.', effect:'events', accent:'#5dffa0', bg:'#141000', html:`<h3>Online Safety Project</h3><p>The YSI Trip was a presentation about staying safe online.</p><h4>12th March — Sligo</h4><div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;margin-bottom:16px;"><p style="flex:1;min-width:260px;margin:0;">We presented our project "Suspect Before Accept" about staying safe online for teenagers — practical tips for recognising online dangers and protecting ourselves on social media and the internet.</p><div style="display:flex;flex-direction:column;gap:12px;flex:0 0 300px;"><video controls style="width:300px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);"><source src="images/YSI.mp4" type="video/mp4"></video><img src="images/YSICard.jpg" alt="YSI Card" style="width:300px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);"></div></div><h4>What I Learned</h4><p>How to present confidently and explain important safety messages clearly. Real risks like fake profiles, phishing, and cyberbullying, and how to spot them early.</p><div class="chip-row"><span class="chip">Online Safety</span><span class="chip">Public Speaking</span><span class="chip">Teamwork</span></div>`},
+    { key:'environmental', icon:'🌍', title:'Young Environmentalist Awards 2026', preview:'The Green Vision Project — Gortnor Abbey.', effect:'events', accent:'#7ef9c0', bg:'#141000', html:`<h3>Green Vision Project</h3><p>This project combined environmental research with community action.</p><h4>Project: The Green Vision Project</h4><div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;margin-bottom:16px;"><div style="flex:1;min-width:260px;"><p>Team: Roisin Keane · Julia McCabe · Saoirse Bothwell · Justin Jijo</p></div><img src="images/YEA.jpg" alt="Young Environmentalist Awards" style="width:300px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);flex:0 0 300px;"></div><p>School: Jesus and Mary Secondary School, Gortnor Abbey, Crossmolina, Co. Mayo</p><h4>Our Goal</h4><p>To create a Sensory-Sustainable Garden that boosts local biodiversity and student wellbeing.</p><h4>What We Did</h4><ul><li>Carbon Footprint Audit: analysed transport, energy, and waste at school</li><li>Air Quality Testing (GLOBE): tested NO₂ at car drop-off, bus park, and Gaelic pitch</li><li>Surveys: 42 students/staff on transport (58% car, 42% bus, 0% walk/cycle)</li><li>Awareness Campaign: GAP Podcast, posters, and "Be Cool at School" car park signs</li></ul><h4>Community Impact</h4><p>Weekly litter picking with Crossmolina Tidy Towns (won video competition), Christmas talent show for Sonas Nursing Home residents, and a returnable bottle scheme — 85% of students now reuse bottles.</p><h4>UN SDGs</h4><p>SDG 13 — Climate Action | SDG 11 — Sustainable Communities | SDG 15 — Life on Land</p><p><strong>What I Learned:</strong> Teamwork, environmental research, and community engagement. Proud we turned ideas into real action for a greener Gortnor Abbey.</p>`},
+    { key:'explorium', icon:'🚀', title:'Dublin Explorium', preview:'Hydrogen cars, Tesla coils, AI workshops, and agility tests.', effect:'events', accent:'#7ec9f9', bg:'#141000', html:`<h3>Science, Technology and Discovery</h3><p>The Dublin Explorium trip brought hands-on science and innovation to life.</p><h4>Organised by Kinia</h4><p>A brilliant trip packed with interactive exhibits and experiments.</p><h4>Activities</h4><div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;"><ul style="flex:1;min-width:260px;margin:0;padding-bottom:0;"><li>Hydrogen Fuel Cell Car: drove a remote-control car powered by clean hydrogen energy</li><li>Tesla Coil: watched high-voltage electricity arcs light up the air</li><li>Agility Test: obstacle courses testing balance, speed, and coordination</li><li>Sprint Test: reaction times and sprint speeds measured with proper sensors</li><li>AI Workshops: hands-on sessions with artificial intelligence and coding challenges</li><li>Optical Illusions: exhibits showing how the brain interprets what we see</li></ul><video controls style="width:300px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);flex:0 0 300px;"><source src="images/tesla.mp4" type="video/mp4"></video></div><h4>What I Learned</h4><p>Seeing hydrogen power in real life and understanding how AI makes decisions. It connected everything we learn in school to real-world technology.</p><h4>Skills Developed</h4><p>Problem-solving (AI workshops), quick reactions (agility tests), and teamwork.</p>`},
+    { key:'gaisce', icon:'🏕️', title:'Gaisce Trip — Ox Mountains Glamping', preview:'Two-day adventure with hiking, team games, and campfire bonding.', effect:'events', accent:'#7ef9c0', bg:'#141000', html:`<h3>Gaisce Trip — Ox Mountains Glamping</h3><h4>What We Did</h4><div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;margin-bottom:16px;"><div style="flex:1;min-width:260px;"><p>For our Gaisce Award adventure journey, we went to Ox Mountain Glamping for a two-day trip. We arrived Day 1, stayed overnight, and returned home the next morning after activities.</p><ul style="margin:0;"><li><strong>Day 1:</strong> Settled into glamping, 28 km hike through mountains and trails</li><li><strong>Day 2:</strong> Team games in the morning, campfire in the evening, then headed home</li></ul></div><img src="images/GaisceScenery.jpg" alt="Ox Mountains hiking" style="width:300px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);flex:0 0 300px;"></div><h4>The Experience</h4><div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;margin-bottom:16px;"><p style="flex:1;min-width:260px;margin:0;">The 28km hike was brutal but epic - proper mountain terrain! Day 2 team games got everyone laughing and working together. Campfire was class - stories, marshmallows, and proper bonding vibes under the stars.</p><img src="images/GaisceGroup.jpg" alt="Group on mountain" style="width:300px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);flex:0 0 300px;"></div><h4>What I Learned</h4><p>Pushing through 28km showed me my limits and how to keep going. Team games taught communication under pressure, and campfire chats built real group trust. Glamping = perfect mix of tough + cosy!</p><h4>Skills I Developed</h4><ul><li><strong>Endurance</strong> — Conquered 28km mountain hike</li><li><strong>Teamwork</strong> — Games + campfire bonding</li><li><strong>Leadership</strong> — Helped navigate tough sections</li><li><strong>Resilience</strong> — Weather, distance, early starts</li></ul>`}
   ]
 };
 const THEMES = {
-  home:{accent:'#7ef9c0', bg:'#06060f'}, english:{accent:'#5dffa0', bg:'#04120a'}, maths:{accent:'#f9e27e', bg:'#120e00'}, re:{accent:'#c9b3f9', bg:'#0c0818'}, pe:{accent:'#f97e7e', bg:'#180505'}, computers:{accent:'#7ec9f9', bg:'#030e1a'}, careers:{accent:'#f9b97e', bg:'#180900'}, art:{accent:'#c8f97e', bg:'#0e1200'}, climate:{accent:'#5dff8a', bg:'#031408'}, chemistry:{accent:'#7ec9f9', bg:'#020a1a'}, firstaid:{accent:'#ff8080', bg:'#180202'}, media:{accent:'#f9e27e', bg:'#181000'}, graphics:{accent:'#7ef9f0', bg:'#021818'}, business:{accent:'#5dff8a', bg:'#021408'}, agscience:{accent:'#c8b47e', bg:'#100d02'}, communitycare:{accent:'#7ef9e8', bg:'#021414'}, techgraphics:{accent:'#d0d0e0', bg:'#101012'}, homeec:{accent:'#f9c07e', bg:'#180a02'}, history:{accent:'#c8a060', bg:'#120800'}, biology:{accent:'#7ef9a0', bg:'#021008'}, swimming:{accent:'#7ec9f9', bg:'#020c1a'}, golf:{accent:'#a8e060', bg:'#061400'}, gym:{accent:'#ff6060', bg:'#0f0505'}, events:{accent:'#f9e27e', bg:'#141000'}, work:{accent:'#e2d58d', bg:'#081016'}
+  home:{accent:'#7ef9c0', bg:'#06060f'}, english:{accent:'#5dffa0', bg:'#04120a'}, maths:{accent:'#f9e27e', bg:'#120e00'}, re:{accent:'#c9b3f9', bg:'#0c0818'}, pe:{accent:'#f97e7e', bg:'#180505'}, computers:{accent:'#7ec9f9', bg:'#030e1a'}, careers:{accent:'#f9b97e', bg:'#180900'}, art:{accent:'#c8f97e', bg:'#0e1200'}, climate:{accent:'#5dff8a', bg:'#031408'}, chemistry:{accent:'#7ec9f9', bg:'#020a1a'}, firstaid:{accent:'#ff8080', bg:'#180202'}, media:{accent:'#f9e27e', bg:'#181000'}, graphics:{accent:'#7ef9f0', bg:'#021818'}, business:{accent:'#5dff8a', bg:'#021408'}, agscience:{accent:'#c8b47e', bg:'#100d02'}, communitycare:{accent:'#7ef9e8', bg:'#021414'}, techgraphics:{accent:'#d0d0e0', bg:'#101012'}, homeec:{accent:'#f9c07e', bg:'#180a02'}, history:{accent:'#c8a060', bg:'#1a4a6e'}, biology:{accent:'#7ef9a0', bg:'#021008'}, swimming:{accent:'#7ec9f9', bg:'#020c1a'}, golf:{accent:'#a8e060', bg:'#061400'}, gym:{accent:'#ff6060', bg:'#0f0505'}, events:{accent:'#f9e27e', bg:'#141000'}, ocean:{accent:'#00d4ff', bg:'#000814'}, work:{accent:'#e2d58d', bg:'#081016'}
 };
-const ALL_SECTIONS = ['home','core','rot','work','mod','more'];
-const PAGE_EFFECTS = { home:'home', core:'english', rot:'home', work:'home', mod:'swimming', more:'events' };
+const ALL_SECTIONS = ['home','core','rot','work','mod','masked','more'];
+const PAGE_EFFECTS = { home:'home', core:'english', rot:'home', work:'home', mod:'swimming', masked:'ocean', more:'events' };
 
 let canvas = null;
 let ctx = null;
@@ -1072,50 +1108,137 @@ const eff = {
     },
     history: {
         init() {
-            S.motes = [];
-            for (let i = 0; i < 60; i++) {
-                S.motes.push({ x: Math.random() * S.w, y: Math.random() * S.h, r: Math.random() * 2 + 0.5, speed: 0.1 + Math.random() * 0.3, alpha: 0.05 + Math.random() * 0.07 });
-            }
-            S.stains = [];
-            for (let i = 0; i < 5; i++) {
-                S.stains.push({ x: Math.random() * S.w, y: Math.random() * S.h, r: 100 + Math.random() * 150 });
-            }
+            S.time = 0;
+            S.planeX = S.w + 120;
+            S.planeY = S.h * 0.42;
+            S.crashed = false;
+            S.crashX = 0;
+            S.crashY = 0;
+            S.smoke = [];
+            S.resetTimer = 0;
+            S.clouds = [
+                { x: S.w * 0.12, y: S.h * 0.1 },
+                { x: S.w * 0.38, y: S.h * 0.07 },
+                { x: S.w * 0.65, y: S.h * 0.13 },
+                { x: S.w * 0.85, y: S.h * 0.18 }
+            ];
         },
         draw() {
-            const paper = ctx.createLinearGradient(0, 0, S.w, S.h);
-            paper.addColorStop(0, '#201608');
-            paper.addColorStop(1, '#120800');
-            ctx.fillStyle = paper;
+            S.time++;
+            const sky = ctx.createLinearGradient(0, 0, 0, S.h);
+            sky.addColorStop(0, '#4a90c4');
+            sky.addColorStop(0.5, '#87CEEB');
+            sky.addColorStop(1, '#b8e0f0');
+            ctx.fillStyle = sky;
             ctx.fillRect(0, 0, S.w, S.h);
 
-            S.stains.forEach(s => {
-                const grad = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.r);
-                grad.addColorStop(0, 'rgba(10, 5, 0, 0.15)');
-                grad.addColorStop(1, 'rgba(10, 5, 0, 0)');
-                ctx.fillStyle = grad;
-                ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2); ctx.fill();
+            S.clouds.forEach(cloud => {
+                cloud.x -= 0.18;
+                if (cloud.x < -220) cloud.x = S.w + 220;
+                ctx.fillStyle = 'rgba(255,255,255,0.88)';
+                ctx.beginPath();
+                ctx.arc(cloud.x, cloud.y, 45, 0, Math.PI * 2);
+                ctx.arc(cloud.x + 42, cloud.y - 18, 32, 0, Math.PI * 2);
+                ctx.arc(cloud.x + 78, cloud.y, 40, 0, Math.PI * 2);
+                ctx.arc(cloud.x + 32, cloud.y + 10, 28, 0, Math.PI * 2);
+                ctx.fill();
             });
 
-            ctx.strokeStyle = 'rgba(200, 160, 80, 0.04)';
-            ctx.lineWidth = 1;
-            for (let y = 0; y < S.h; y += 40) {
-                ctx.beginPath(); ctx.moveTo(0, y);
-                for (let x = 0; x <= S.w; x += 20) { ctx.lineTo(x, y + Math.random() * 10 - 5); }
-                ctx.stroke();
+            const tw = Math.max(52, S.w * 0.056);
+            const th = S.h * 0.62;
+            const gap = tw * 1.35;
+            const t1x = S.w * 0.5 - gap / 2 - tw;
+            const t2x = S.w * 0.5 + gap / 2;
+            const ty = S.h - th;
+
+            const drawTower = (tx) => {
+                ctx.fillStyle = '#c2cdd6';
+                ctx.fillRect(tx, ty, tw, th);
+                const grad = ctx.createLinearGradient(tx, ty, tx + tw, ty);
+                grad.addColorStop(0, 'rgba(255,255,255,0.18)');
+                grad.addColorStop(1, 'rgba(0,0,0,0.14)');
+                ctx.fillStyle = grad;
+                ctx.fillRect(tx, ty, tw, th);
+                ctx.fillStyle = '#7a8d96';
+                ctx.fillRect(tx + tw / 2 - 2, ty - 22, 4, 22);
+                ctx.fillStyle = 'rgba(170,215,255,0.5)';
+                const cols = 5, rows = 18;
+                const ww = (tw - 10) / cols - 2;
+                const wh = (th * 0.82) / rows - 3;
+                for (let r = 0; r < rows; r++) {
+                    for (let c = 0; c < cols; c++) {
+                        ctx.fillRect(tx + 5 + c * ((tw - 10) / cols), ty + 8 + r * ((th * 0.82) / rows), ww, wh);
+                    }
+                }
+            };
+
+            drawTower(t1x);
+            drawTower(t2x);
+
+            const targetX = t1x + tw * 0.6;
+            if (!S.crashed) {
+                S.planeX -= 3;
+                if (S.planeX <= targetX) {
+                    S.crashed = true;
+                    S.crashX = targetX;
+                    S.crashY = S.planeY;
+                }
             }
 
-            S.motes.forEach(m => {
-                m.y -= m.speed;
-                if (m.y < -10) { m.y = S.h + 10; m.x = Math.random() * S.w; }
-                ctx.fillStyle = `rgba(210, 170, 100, ${m.alpha})`;
-                ctx.beginPath(); ctx.arc(m.x, m.y, m.r, 0, Math.PI * 2); ctx.fill();
-            });
+            if (!S.crashed) {
+                ctx.save();
+                ctx.translate(S.planeX, S.planeY);
+                ctx.scale(-1, 1);
+                ctx.fillStyle = '#dce0e4';
+                ctx.beginPath();
+                ctx.ellipse(0, 0, 40, 9, 0, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.beginPath();
+                ctx.moveTo(-6, 2); ctx.lineTo(-30, 26); ctx.lineTo(20, 2);
+                ctx.closePath(); ctx.fill();
+                ctx.beginPath();
+                ctx.moveTo(-32, -2); ctx.lineTo(-48, -17); ctx.lineTo(-24, -2);
+                ctx.closePath(); ctx.fill();
+                ctx.fillStyle = '#8ab8d8';
+                ctx.beginPath();
+                ctx.arc(34, -3, 8, Math.PI * 0.3, Math.PI * 1.1);
+                ctx.fill();
+                ctx.restore();
+            } else {
+                S.resetTimer++;
+                for (let i = 0; i < 5; i++) {
+                    S.smoke.push({
+                        x: S.crashX + (Math.random() - 0.5) * 55,
+                        y: S.crashY + (Math.random() - 0.3) * 35,
+                        vx: (Math.random() - 0.5) * 1.4,
+                        vy: -(0.5 + Math.random() * 2),
+                        r: 5 + Math.random() * 15,
+                        alpha: 0.75 + Math.random() * 0.25,
+                        type: Math.random() < 0.45 ? 'fire' : 'smoke'
+                    });
+                }
+                for (let i = S.smoke.length - 1; i >= 0; i--) {
+                    const p = S.smoke[i];
+                    p.x += p.vx; p.y += p.vy;
+                    p.r += 0.6; p.alpha -= 0.011;
+                    if (p.alpha <= 0) { S.smoke.splice(i, 1); continue; }
+                    if (p.type === 'fire') {
+                        ctx.fillStyle = `rgba(255, ${80 + Math.floor(Math.random() * 130)}, 10, ${p.alpha})`;
+                    } else {
+                        ctx.fillStyle = `rgba(45, 45, 45, ${p.alpha * 0.72})`;
+                    }
+                    ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
+                }
+                if (S.resetTimer > 320) {
+                    S.planeX = S.w + 120;
+                    S.crashed = false;
+                    S.smoke = [];
+                    S.resetTimer = 0;
+                }
+            }
 
-            const vignette = ctx.createRadialGradient(S.w / 2, S.h / 2, Math.min(S.w, S.h) * 0.4, S.w / 2, S.h / 2, Math.max(S.w, S.h) * 0.8);
-            vignette.addColorStop(0, 'rgba(0, 0, 0, 0)');
-            vignette.addColorStop(1, 'rgba(0, 0, 0, 0.7)');
-            ctx.fillStyle = vignette;
-            ctx.fillRect(0, 0, S.w, S.h);
+            ctx.fillStyle = '#6a6a6a';
+            ctx.fillRect(0, S.h - Math.max(16, S.h * 0.035), S.w, Math.max(16, S.h * 0.035));
         }
     },
     biology: {
@@ -1194,6 +1317,63 @@ const eff = {
                 ctx.lineWidth = 2;
                 ctx.beginPath(); ctx.arc(r.x, r.y, r.r, 0, Math.PI * 2); ctx.stroke();
             }
+        }
+    },
+    ocean: {
+        init() {
+            S.bubbles = [];
+            S.rays = [];
+            for (let i = 0; i < 45; i++) {
+                S.bubbles.push({
+                    x: Math.random() * S.w,
+                    y: S.h + Math.random() * S.h,
+                    r: 3 + Math.random() * 12,
+                    speed: 0.5 + Math.random() * 1.2,
+                    wobble: Math.random() * Math.PI * 2,
+                    alpha: 0.1 + Math.random() * 0.25
+                });
+            }
+            for (let i = 0; i < 6; i++) {
+                S.rays.push({
+                    x: Math.random() * S.w,
+                    width: 120 + Math.random() * 200,
+                    drift: (Math.random() - 0.5) * 0.25,
+                    alpha: 0.03 + Math.random() * 0.05
+                });
+            }
+        },
+        draw() {
+            const bg = ctx.createLinearGradient(0, 0, 0, S.h);
+            bg.addColorStop(0, '#000814');
+            bg.addColorStop(1, '#001d3d');
+            ctx.fillStyle = bg;
+            ctx.fillRect(0, 0, S.w, S.h);
+
+            S.rays.forEach(ray => {
+                ray.x += ray.drift;
+                if (ray.x < -ray.width) ray.x = S.w + ray.width;
+                if (ray.x > S.w + ray.width) ray.x = -ray.width;
+                const grad = ctx.createLinearGradient(ray.x, 0, ray.x + ray.width, S.h);
+                grad.addColorStop(0, `rgba(0, 212, 255, ${ray.alpha})`);
+                grad.addColorStop(1, 'rgba(0, 212, 255, 0)');
+                ctx.fillStyle = grad;
+                ctx.fillRect(ray.x, 0, ray.width, S.h);
+            });
+
+            S.bubbles.forEach(b => {
+                b.y -= b.speed;
+                b.wobble += 0.03;
+                const drawX = b.x + Math.sin(b.wobble) * 10;
+                if (b.y < -b.r) {
+                    b.y = S.h + b.r;
+                    b.x = Math.random() * S.w;
+                }
+                ctx.strokeStyle = `rgba(180, 240, 255, ${b.alpha})`;
+                ctx.lineWidth = 1.5;
+                ctx.beginPath();
+                ctx.arc(drawX, b.y, b.r, 0, Math.PI * 2);
+                ctx.stroke();
+            });
         }
     },
     golf: {
@@ -1303,11 +1483,18 @@ function resizeCanvas() {
     }
 }
 
+function stopAllMedia() {
+    document.querySelectorAll('video').forEach(v => v.pause());
+    document.querySelectorAll('iframe').forEach(f => { f.src = f.src; });
+}
+
 function showPage(section) { 
+    stopAllMedia();
     currentPage = section; 
     if (ALL_SECTIONS.includes(section)) { currentSection = section; currentIndex = 0; }
     const pageId = section === 'detail-page' ? section : `${section}-page`;
     document.querySelectorAll('.page').forEach(page => { page.classList.toggle('active', page.id === pageId); });
+    window.scrollTo(0, 0);
     const activeSection = section === 'detail-page' ? currentSection : section;
     document.querySelectorAll('.nav-link').forEach(link => { const target = link.dataset.page; link.classList.toggle('active', target === activeSection); });
     ['core', 'rot', 'mod', 'more'].forEach(id => { const overview = document.getElementById(`${id}-overview`); const detail = document.getElementById(`${id}-detail`); if (overview) overview.classList.remove('hidden'); if (detail) detail.classList.add('hidden'); });
@@ -1328,12 +1515,29 @@ function showPage(section) {
     }
 }
 
+function showSection(section) {
+    showPage(section);
+}
+
+function moveMaskedSlide(button, step) {
+    const carousel = button.closest('.masked-carousel');
+    if (!carousel) return;
+    const slides = carousel.querySelectorAll('.masked-slide');
+    if (!slides.length) return;
+    const current = Number(carousel.dataset.index || 0);
+    const next = (current + step + slides.length) % slides.length;
+    slides[current].style.opacity = '0';
+    slides[next].style.opacity = '1';
+    carousel.dataset.index = String(next);
+}
+
 function openCard(section, idx) { 
     const index = idx === undefined ? 0 : Number(idx); 
     const item = SECTION_DATA[section]?.[index]; 
     if (!item) return; 
     currentSection = section; currentIndex = index; 
     showPage('detail-page'); 
+    window.scrollTo(0, 0);
     buildTabBar(section, index); 
     setDetail(section, index); 
     document.getElementById('detail-title').textContent = item.title; 
@@ -1341,7 +1545,7 @@ function openCard(section, idx) {
     applyTheme(`${section}_${index}`); 
 }
 
-function closeCard(section) { showPage(section); }
+function closeCard(section) { stopAllMedia(); showPage(section); }
 
 function switchTab(section, idx) { 
     if (currentSection !== section) return; 
@@ -1369,8 +1573,27 @@ function buildTabBar(section, activeIndex) {
 }
 
 function setDetail(section, index) { 
-    const content = SECTION_DATA[section]?.[index]?.html || '<p>Content unavailable.</p>'; 
-    document.getElementById('detail-page-content').innerHTML = `<h3>${SECTION_DATA[section][index].title}</h3><p>${SECTION_DATA[section][index].preview}</p>${content}`; 
+    const item = SECTION_DATA[section]?.[index];
+    if (!item) return;
+    const content = item.html || '<p>Content unavailable.</p>'; 
+    const maxIndex = SECTION_DATA[section].length - 1;
+    const isLastItem = index === maxIndex;
+    
+    const sectionFlow = { core: { next: 'rot', name: 'Rotational Subjects', hasCards: true }, rot: { next: 'work', name: 'Work Experience', hasCards: false }, mod: { next: 'masked', name: 'Masked Singers', hasCards: false }, masked: { next: 'more', name: 'More Activities', hasCards: true } };
+    const nextSection = sectionFlow[section];
+    
+    let nextButton;
+    if (isLastItem && nextSection) {
+        const nextAction = nextSection.hasCards 
+            ? `showPage('${nextSection.next}'); openCard('${nextSection.next}', 0); window.scrollTo(0, 0);` 
+            : `showPage('${nextSection.next}'); window.scrollTo(0, 0);`;
+        nextButton = `<button class="back-btn" style="margin-bottom: 0; background: var(--accent); color: #000; box-shadow: 0 0 15px rgba(126,201,249,0.4);" onclick="${nextAction}">Next Section: ${nextSection.name} →</button>`;
+    } else {
+        nextButton = `<button class="back-btn" style="margin-bottom: 0; background: var(--accent); color: #000; visibility: ${index < maxIndex ? 'visible' : 'hidden'};" onclick="openCard('${section}', ${index + 1})">Next →</button>`;
+    }
+    
+    const navButtons = `<div style="display: flex; justify-content: space-between; margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);"><button class="back-btn" style="margin-bottom: 0; visibility: ${index > 0 ? 'visible' : 'hidden'};" onclick="openCard('${section}', ${index - 1})">← Previous</button>${nextButton}</div>`;
+    document.getElementById('detail-page-content').innerHTML = `<h3>${item.title}</h3><p>${item.preview}</p>${content}${navButtons}`; 
 }
 
 function applyTheme(key) { 
@@ -1412,7 +1635,7 @@ function applyTheme(key) {
         contentEl.style.background = `radial-gradient(circle at top left, rgba(${rgb}, 0.15), transparent 38%), rgba(6,10,18,0.2)`; 
     }
 
-    const transparentEffects = ['maths', 'pe', 'careers', 'firstaid', 'techgraphics', 'homeec', 'history'];
+    const transparentEffects = ['maths', 'pe', 'careers', 'firstaid', 'techgraphics', 'homeec'];
     document.querySelectorAll('.detail-panel').forEach(panel => {
         if (transparentEffects.includes(effectKey)) {
             panel.style.background = 'rgba(7,11,20,0.1)';
@@ -1430,7 +1653,8 @@ function buildCards() {
     ['core', 'rot', 'mod', 'more'].forEach(section => { 
         const container = document.getElementById(`${section}-overview`); 
         SECTION_DATA[section]?.forEach((item, index) => { 
-            const card = document.createElement('div'); 
+            const card = document.createElement('button'); 
+            card.type = 'button';
             card.className = 'card'; 
             card.onclick = () => openCard(section, index); 
             card.innerHTML = `<div><div class="card-title"><span>${item.icon}</span>${item.title}</div><p class="card-subtitle">${item.preview}</p></div><div class="section-pill">View details</div>`; 
